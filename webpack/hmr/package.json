@@ -1,0 +1,23 @@
+{
+  "name": "hmr",
+  "version": "1.0.0",
+  "description": "看到浏览器热更新，我们很容易就想到的是`webpack` 和 `webpack-dev-server`。",
+  "main": "webpack.config.basic.js",
+  "scripts": {
+    "build:basic": "webpack --config webpack.config.basic.js",
+    "build:watch": "webpack --config webpack.config.watch.js",
+    "dev:reload": "webpack-dev-server --config webpack.config.reload.js",
+    "dev:hmr": "webpack-dev-server --config webpack.config.hmr.js",
+    "dev:hmrjs": "webpack-dev-server --config webpack.config.hmrjs.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^5.0.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
