@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <p>Web AbortController</p>
+
+    <div class="controller">
+      <button class="download">download video</button>
+      <button class="abort">stop download network</button>
+    </div>
+    <script>
+      const url = './sintel.mp4'
+      const downloadBtn = document.querySelector('.download')
+      const abortBtn = document.querySelector('.abort')
+
+      let controller
+
+      downloadBtn.addEventListener('click', fetchVideo)
+      abortBtn.addEventListener('click', () => {
+        controller.abort()
+        console.log('stop download')
+      })
+
+      function fetchVideo() {
+        controller = new AbortController()
+        const signal = controller.signal
+        fetch(url, { signal }).then((response) => {
+          if (response.status === 200) {
+            return response.blob()
+          } else {
+            throw new Error('Failed to fetch')
+          }
+        }).then((vBlob) => {
+          console.log('----download success----')
+          console.log(vBlob)
+        })
+      }
+    </script>
+  </body>
+</html>

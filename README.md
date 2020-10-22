@@ -13,7 +13,7 @@
 
 ## Web开发技术
 
-🚩AbortController接口表示一个控制器对象，允许你根据需要中止一个或多个 Web请求: [MDN AbortController](https://developer.mozilla.org/zh-CN/docs/Web/API/FetchController)
+AbortController接口表示一个控制器对象，允许你根据需要中止一个或多个 Web请求: [MDN AbortController](https://developer.mozilla.org/zh-CN/docs/Web/API/FetchController)
   Node.js 15中也加入了这个功能
 
 ## 日常文章收集
