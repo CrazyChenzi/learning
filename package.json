@@ -35,5 +35,8 @@
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^4.3.0",
     "ts-node": "^9.0.0"
+  },
+  "dependencies": {
+    "@ant-design/pro-layout": "^6.5.9"
   }
 }
