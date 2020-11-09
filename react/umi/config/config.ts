@@ -12,7 +12,7 @@ export default defineConfig({
     hmr: true,
   },
   layout: {
-    name: 'Ant Design Pro',
+    name: 'This is Demo',
     locale: true,
     ...defaultSettings,
   },

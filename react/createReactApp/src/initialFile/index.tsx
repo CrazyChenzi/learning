@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 
-const Square = (props) => {
+interface SquareProps {
+  value: any;
+  onClick: () => void;
+}
+
+const Square: React.FC<SquareProps> = (props) => {
   return (
     <botton className="square" onClick={props.onClick}>{ props.value }</botton>
   )
 }
 
-const Board = (props) => {
-  const renderSquare = (i) => {
+interface BoardProps {
+  squares: any[];
+  onClick: (i: number) => void;
+}
+
+const Board: React.FC<BoardProps> = (props) => {
+  const renderSquare = (i: number) => {
     return (
       <Square
         value={props.squares[i]}
@@ -21,7 +31,6 @@ const Board = (props) => {
   }
   return (
     <div>
-      <div className="status">{ props.status }</div>
       <div className="board-row">
         { renderSquare(0) }
         { renderSquare(1) }
@@ -71,12 +80,12 @@ const Board = (props) => {
 //   }
 // }
 
-const Game = (props) => {
+const Game: FC = (props) => {
   const [history, setHistory] = useState([{squares: Array(9).fill(null)}])
   const [stepNumber, setStepNumber] = useState(0)
   const [xIsNext, setXIsNext] = useState(true)
 
-  const handleClick = (i) => {
+  const handleClick = (i: number) => {
     const historyCopy = history.slice(0, stepNumber + 1)
     const current = historyCopy[historyCopy.length - 1]
     const squares = current.squares.slice()
@@ -91,7 +100,7 @@ const Game = (props) => {
     setXIsNext(!xIsNext)
   }
 
-  const jumpTo = (move) => {
+  const jumpTo = (move: number) => {
     setStepNumber(move)
     const x = move % 2 === 0
     setXIsNext(x)
@@ -119,7 +128,7 @@ const Game = (props) => {
   return (
     <div className="game">
       <div className="game-board">
-        <Board squares={current.squares} onClick={(i) => handleClick(i)}></Board>
+        <Board squares={current.squares} onClick={(i: number) => handleClick(i)}></Board>
       </div>
       <div className="game-info">
         <div>{ status }</div>
@@ -197,7 +206,7 @@ const Game = (props) => {
 //   }
 // }
 
-const calculateWinner = (squares) => {
+const calculateWinner = (squares: any[]) => {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],

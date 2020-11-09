@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 import { ResponseError } from 'umi-request';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
-import Title from 'antd/lib/skeleton/Title';
+// import Title from 'antd/lib/skeleton/Title';
 
 export async function getInitialState(): Promise<{
   settings?: LayoutSettings;
