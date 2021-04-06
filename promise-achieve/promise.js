@@ -13,7 +13,7 @@ class MyPromise {
   }
 
   status = PADDING
-  vaule = null // 成功之后的值
+  value = null // 成功之后的值
   reason = null // 失败之后的原因
 
   onFulfilledCallbacks = [] // 存储成功回调函数
@@ -32,6 +32,107 @@ class MyPromise {
   static reject(reason) {
     return new MyPromise((resolve, reject) => {
       reject(reason)
+    })
+  }
+
+  static race(promises) {
+    return new MyPromise((resolve, reject) => {
+      promises.forEach(promise => {
+        try {
+          MyPromise.resolve(promise).then(resolve, reject)
+        } catch (error) {
+          reject(error)
+        }
+      })
+    })
+  }
+
+  static all(promises) {
+    return new MyPromise((resolve, reject) => {
+      if (promises === null || promises === undefined || typeof promises[Symbol.iterator] !== 'function') {
+        reject(new TypeError('cannot read property Symbol(Symbol.iterator)'))
+      }
+      if (!Array.isArray(promises)) {
+        resolve()
+      }
+
+      let count = 0
+      const promiseNum = promises.length
+      const resolvedValues = new Array(promiseNum)
+
+      promises.forEach((promise, index) => {
+        MyPromise.resolve(promise).then(value => {
+          count++
+          resolvedValues[index] = value
+          if (count === promiseNum) {
+            return resolve(resolvedValues)
+          }
+        }).catch((error) => {
+          return reject(error)
+        })
+      })
+    })
+  }
+
+  static any(promises) {
+    return new MyPromise((resolve, reject) => {
+      if (promises === null || promises === undefined || typeof promises[Symbol.iterator] !== 'function') {
+        reject(new TypeError('cannot read property Symbol(Symbol.iterator)'))
+      }
+      if (!Array.isArray(promises)) {
+        resolve()
+      }
+      let count = 0
+      const promiseNum = promises.length
+
+      promises.forEach((promise, index) => {
+        MyPromise.resolve(promise).then(value => {
+          count++
+          return resolve(value)
+        }).catch((error) => {
+          count++
+          if (count === promiseNum) {
+            // TODO AggregateError 现在为实验中方法，因此暂时使用 TypeError
+            return reject(new TypeError('cannotNo Promise in Promise.any was resolved'))
+          }
+        })
+      })
+    })
+  }
+
+  static allSettled(promises) {
+    return new MyPromise((resolve, reject) => {
+      if (promises === null || promises === undefined || typeof promises[Symbol.iterator] !== 'function') {
+        reject(new TypeError('cannot read property Symbol(Symbol.iterator)'))
+      }
+      if (!Array.isArray(promises)) {
+        resolve()
+      }
+      let count = 0
+      const promiseNum = promises.length
+      const resolvedValues = new Array(promiseNum)
+
+      promises.forEach((promise, index) => {
+        MyPromise.resolve(promise).then(value => {
+          resolvedValues[index] = {
+            status: 'fulfilled',
+            value
+          }
+          if (count === promiseNum) {
+            return resolve(resolvedValues)
+          }
+        }).catch((reason) => {
+          resolvedValues[index] = {
+            status: 'rejected',
+            reason
+          }
+        }).finally(() => {
+          count++
+          if (count === promiseNum) {
+            return resolve(resolvedValues)
+          }
+        })
+      })
     })
   }
 
@@ -92,6 +193,16 @@ class MyPromise {
       }
     })
     return promise
+  }
+  catch(callback) {
+    return this.then(null, callback)
+  }
+  finally(callback) {
+    let P = this.constructor
+    return this.then(
+      value  => P.resolve(callback()).then(() => value),
+      reason => P.resolve(callback()).then(() => { throw reason })
+    )
   }
 }
 

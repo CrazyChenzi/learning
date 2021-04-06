@@ -7,6 +7,7 @@
 | currying    | [currying example](./currying/currying.js)     | [https://github.com/mqyqingfeng/Blog/issues/42](https://github.com/mqyqingfeng/Blog/issues/42)    |
 | webpack hmr | [webpack hmr example](./webpack/hmr/README.md) |                                                                                                   |
 | math        | [math basic api example](./math/README.md)     | [MDN Math](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Math) |
+| promise-achieve | [实现一个promise](./promise-achieve/README.md)  |  |
 
 ## JavaScript
 
