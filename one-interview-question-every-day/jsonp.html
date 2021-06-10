@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jsonp</title>
+</head>
+<body>
+  <!-- 利用 script 标签的 src 属性调用资源不跨域的特性，像服务端请求的同时传入一个 callback 回调方法名作为参数，服务端接收函数名返回 json 形式的的资源代码。 jsonp 只支持 get 请求 -->
+  <script type="text/javascript">
+    // 获取到跨域资源后的回调
+    var handleFn = function(data){
+      console.log(data)  // JSONP跨域成功返回的资源
+    }
+    var url = "url?callback=handleFn"
+    var script = document.createElement('script')
+    script.setAttribute('src', url)
+    document.body.appendChild(script)
+  </script>
+</body>
+</html>
